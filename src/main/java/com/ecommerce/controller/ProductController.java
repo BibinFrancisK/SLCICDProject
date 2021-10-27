@@ -25,5 +25,59 @@ public class ProductController {
 	@Autowired
 	ProductRepository pRepo;
 
-}
+	// list all products
+	@GetMapping("/products")
+	public List<Product> getProducts() {
+		List<Product> list = pRepo.findAll();
+		if (!list.isEmpty()) {
+			return list;
+		}
+		throw new ProductNotFoundException("Product list is empty !");
+	}
 
+	// get on product
+	@GetMapping("/products/{id}")
+	public Product getProducts(@PathVariable("id") long id) {
+		Product fetchedProduct = pRepo.findById(id).orElseThrow(() -> {
+			throw new ProductNotFoundException("Product does not exist with id " + id);
+		});
+		return fetchedProduct;
+	}
+
+	// create product
+	@PostMapping("/products")
+	public Product addProduct(@RequestBody(required = false) Product productObj) {
+		if (productObj != null) {
+			return pRepo.save(productObj);
+		}
+		throw new InvalidProductException("Product creation failed ! missing project object !");
+	}
+
+	// update product
+	@PutMapping("/products")
+	public Product updateProduct(@RequestBody Product productObj) {
+		// step 1: find product
+		Product fetchedProduct = pRepo.findById(productObj.getId()).orElseThrow(() -> {
+			throw new ProductNotFoundException("Product does not exist with id " + productObj.getId());
+		});
+		// step 2: Map updating fields
+		fetchedProduct.setName(productObj.getName());
+		fetchedProduct.setPrice(productObj.getPrice());
+		fetchedProduct.setDescription(productObj.getDescription());
+		// step 3: update
+		return pRepo.save(fetchedProduct);
+
+	}
+
+	// get on product
+	@DeleteMapping("/products/{id}")
+	public void deleteProduct(@PathVariable("id") long id) {
+		// step 1: find product
+		Product fetchedProduct = pRepo.findById(id).orElseThrow(() -> {
+			throw new ProductNotFoundException("Product does not exist with id " + id);
+		});
+		// step 2: delete
+		pRepo.delete(fetchedProduct);
+	}
+
+}
