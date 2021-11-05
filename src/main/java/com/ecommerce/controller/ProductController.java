@@ -37,12 +37,14 @@ public class ProductController {
 
 	// get on product
 	@GetMapping("/products/{id}")
-	public Product getProducts(@PathVariable("id") long id) throws Exception {
-		Product fetchedProduct = pRepo.findById(id).orElseThrow(() -> {
-			throw new ProductNotFoundException("Product does not exist with id " + id);
-		});
-		return fetchedProduct;
-	}
+	public Product getProducts(@PathVariable("id") long id) {
+		/*Product fetchedProduct = pRepo.findById(id).orElseThrow(() -> {
+			throw new ProductNotFoundException("Product does not exist with id " + id);*/
+			
+			Product fetchedProduct2= pRepo.findById(id).get();
+			return fetchedProduct2;
+		}
+		
 
 	// create product
 	@PostMapping("/products")
@@ -55,7 +57,7 @@ public class ProductController {
 
 	// update product
 	@PutMapping("/products")
-	public Product updateProduct(@RequestBody Product productObj)  throws Exception{
+	public Product updateProduct(@RequestBody Product productObj){
 		// step 1: find product
 		Product fetchedProduct = pRepo.findById(productObj.getId()).orElseThrow(() -> {
 			throw new ProductNotFoundException("Product does not exist with id " + productObj.getId());
@@ -71,7 +73,7 @@ public class ProductController {
 
 	// get on product
 	@DeleteMapping("/products/{id}")
-	public void deleteProduct(@PathVariable("id") long id) throws Exception{
+	public void deleteProduct(@PathVariable("id") long id){
 		// step 1: find product
 		Product fetchedProduct = pRepo.findById(id).orElseThrow(() -> {
 			throw new ProductNotFoundException("Product does not exist with id " + id);
