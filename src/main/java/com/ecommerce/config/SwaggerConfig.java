@@ -25,7 +25,7 @@ public class SwaggerConfig {
 		return new ApiInfo("Ecommerce Products RESTful API ", 
 				"Ecommerce Products REST API for Online Store", "1.0.0",
 				"Term of service as per user guide lines.", 
-				new Contact("Bibin Francis", "http://bibin.francis.com/about", "help@gmail.com"),
-				"Apache Lience Version 2.0", "https://www.apache.org/licenses/LICENSE-2.0.html");
+				new Contact("Bibin Francis", "https://github.com/BibinFrancisK", "email@gmail.com"),
+				"Running on Apache Tomcat", "Created as part of Simplilearn project");
 	}
 }
