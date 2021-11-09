@@ -10,7 +10,7 @@ public class HomeController {
 
 	@GetMapping(value="/")
 	public String indexMapping() {
-		return "Apache Tomcat server is up and running !";
+		return "Tomcat server is up and running !";
 	}
 	
 
